@@ -1,25 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Button, Icon, } from 'semantic-ui-react';
+
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <br></br>
+      <h1 class="ui dividing centered header">Timers</h1>
+      <div class="ui basic content center aligned segment">
+        <Button>
+          <Icon fitted name='plus' />
+        </Button>
+      </div>
+    </div >
   );
 }
 
