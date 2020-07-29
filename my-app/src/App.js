@@ -14,22 +14,33 @@ class App extends Component {
       timers: [],
       visible: false,
     }
+    this.intervals = [];
   }
 
   handleStart = (id) => {
-    let timers = this.state.timers
-    const index = timers.findIndex(timer =>
+    const index = this.state.timers.findIndex(timer =>
       timer.id === id)
-    const selectedTimer = timers[index].elapsedSeconds
-    let _this = this
-    setInterval(function () {
-      _this.setState({ selectedTimer: selectedTimer + 1 })
-      console.log(timers)
-    }, 1000)
+    let _this = this;
+    if (!this.intervals[index]) {
+      this.intervals[index] = setInterval(function () {
+        _this.setState({
+          timers: _this.state.timers.map((timer, i) => {
+          if (index === i) {
+            timer.elapsedSeconds += 1;
+          }
+          return timer;
+        })
+        });
+      }, 1000);
+    }
   }
 
   handleStop = (id) => {
-    clearInterval(this.interval)
+    let timers = this.state.timers
+    const index = timers.findIndex(timer =>
+      timer.id === id)
+    clearInterval(this.intervals[index]);
+    this.intervals[index] = null;
   }
 
   handleEdit = (id) => {
@@ -40,23 +51,23 @@ class App extends Component {
   handleDelete = (id) => {
     const index = this.state.timers.findIndex(timer =>
       timer.id === id)
-    let newList = this.state.timers.splice(index, 1);
-    this.setState({ timers: newList })
+    this.setState({ timers: this.state.timers.filter((timer, i) => index !== i) })
   }
 
   addTimer(event) {
     event.preventDefault()
     const Title = event.target['Title'].value
     const Project = event.target['Project'].value
+    const ids = this.state.timers.map(task => task.id);
+    const max = Math.max(Math.max.apply(Math, ids), 0);
     const newTimer = {
-      id: Math.max(this.state.timers.map(task => task.id)) + 1,
+      id: max + 1,
       title: Title,
       project: Project,
       elapsedSeconds: 0,
-      counting: false,
     }
     this.setState({
-      timers: [newTimer, ...this.state.timers],
+      timers: [...this.state.timers, newTimer],
       visible: false,
     });
     event.target.reset()
