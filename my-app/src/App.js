@@ -111,7 +111,7 @@ class App extends Component {
         <br></br>
         <h1 class="ui dividing centered header">Stopwatches</h1>
         <Grid centered >
-          <Grid.Column mobile={12} tablet={6} computer={5}>
+          <Grid.Column mobile={11} tablet={6} computer={4}>
             <Card.Group itemsPerRow={1}>
               {timers.map(item =>
                 item.updating ? <Update
