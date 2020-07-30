@@ -65,7 +65,9 @@ class App extends Component {
           timer.updating = !timer.updating;
         }
         return timer;
-      })
+      }),
+      newName: '',
+      newProject: '',
     })
   }
   addTimer(event) {
